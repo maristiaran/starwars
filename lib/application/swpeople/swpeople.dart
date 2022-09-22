@@ -10,10 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SWPeopleBloc extends Bloc<SWPeopleEvent, SWPeopleState> {
   final StarwarsRepositoryPort _starwarsRepository;
   bool initial = true;
-  //TODO: Extraer el 82 del Json
+  //TODO: Extraer el 82 del Repositorio
   final CircularBuffer<SWCharacter> _allSWPeople =
       CircularBuffer<SWCharacter>(82);
-  int? _nextElementsIncrementWaitingToShowIfAny;
 
   SWPeopleBloc(this._starwarsRepository)
       : super(const SWPeopleState.initialLoading(count: 0)) {
@@ -21,20 +20,15 @@ class SWPeopleBloc extends Bloc<SWPeopleEvent, SWPeopleState> {
       response.fold((error) => add(ReceiveErrorEvent(error.message())),
           (someSWPeople) {
         _allSWPeople.addElements(someSWPeople);
-        // if (_nextElementsIncrementWaitingToShowIfAny != null) {
-        //   if (_allSWPeople.canGetNextElements(
-        //       count: _nextElementsIncrementWaitingToShowIfAny!)) {
-        //     add(GetNextSWPeopleEvent(
-        //         count: _nextElementsIncrementWaitingToShowIfAny!));
-        //     _nextElementsIncrementWaitingToShowIfAny = null;
-        //   }
-        // }
       });
     });
     on<GetNextSWPeopleEvent>(_onGetNextSWPeople);
     on<EnterSWPeopleDetailsEvent>(_onEnterSWPeopleDetails);
     on<ExitSWPeopleDetailsEvent>(_onExitSWPeopleDetails);
     on<ReceiveErrorEvent>(_onReceiveError);
+    on<EnterSWPeopleMenuEvent>(_onEnterMenu);
+    on<ExitSWPeopleMenuEvent>(_onExitMenu);
+
     add(GetNextSWPeopleEvent(count: 5));
   }
   CircularBuffer<SWCharacter> get allSWPeople => _allSWPeople;
@@ -52,7 +46,7 @@ class SWPeopleBloc extends Bloc<SWPeopleEvent, SWPeopleState> {
             firstIndex: _allSWPeople.currentIndex, inc: event.count));
       }
     } else {
-      Timer(const Duration(seconds: 1), () {
+      Timer(const Duration(milliseconds: 500), () {
         add(GetNextSWPeopleEvent(count: 5));
       });
 
@@ -73,6 +67,15 @@ class SWPeopleBloc extends Bloc<SWPeopleEvent, SWPeopleState> {
   _onExitSWPeopleDetails(
       ExitSWPeopleDetailsEvent event, Emitter<SWPeopleState> emit) async {
     emit(state.toExitDetails());
+  }
+
+  _onEnterMenu(
+      EnterSWPeopleMenuEvent event, Emitter<SWPeopleState> emit) async {
+    emit(state.toEnterMenu());
+  }
+
+  _onExitMenu(ExitSWPeopleMenuEvent event, Emitter<SWPeopleState> emit) async {
+    emit(state.toExitMenu());
   }
 
   _onReceiveError(ReceiveErrorEvent event, Emitter<SWPeopleState> emit) async {

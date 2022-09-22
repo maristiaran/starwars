@@ -1,4 +1,5 @@
-import 'package:desafio_urbetrack/domain/errors.dart';
+import 'package:desafio_urbetrack/domain/responses.dart';
+import 'package:desafio_urbetrack/domain/sighting_report.dart';
 import 'package:desafio_urbetrack/domain/startwars_repository.dart';
 import 'package:desafio_urbetrack/domain/starwars_character.dart';
 import 'package:dio/dio.dart';
@@ -52,6 +53,27 @@ class StarwarsRepositoryRestAdapter implements StarwarsRepositoryPort {
           starships: [''],
           vehicles: ['']));
     } else {
+      return Left(SWPeopleError(SWPeopleErrors.networkConnection));
+    }
+  }
+
+  @override
+  Future<Either<SWPeopleError, Success>> reportSighting(
+      {required SWSightingReport sWSightingReport}) async {
+    Map<String, dynamic> json = {
+      "userId": sWSightingReport.userId,
+      "dateTime": sWSightingReport.dateTime,
+      "character_name": sWSightingReport.characterName
+    };
+    try {
+      Response response = await dio
+          .post('https://jsonplaceholder.typicode.com/posts', data: json);
+      if (response.statusCode == 200) {
+        return Right(Success(message: '¡Reporte enviado!'));
+      } else {
+        return Left(SWPeopleError(SWPeopleErrors.networkConnection));
+      }
+    } catch (e) {
       return Left(SWPeopleError(SWPeopleErrors.networkConnection));
     }
   }

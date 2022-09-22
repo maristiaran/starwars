@@ -1,6 +1,8 @@
 import 'package:desafio_urbetrack/application/swpeople/swpeople.dart';
 import 'package:desafio_urbetrack/application/swpeople/swpeople_events.dart';
 import 'package:desafio_urbetrack/application/swpeople/swpeople_state.dart';
+import 'package:desafio_urbetrack/bindings_and_tools.dart';
+import 'package:desafio_urbetrack/domain/sighting_report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,9 +13,31 @@ class SWPeopleDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Star wars'),
+        title: const Text('Detalle'),
       ),
       body: BlocBuilder<SWPeopleBloc, SWPeopleState>(builder: (context, state) {
+        _onReportSighting() async {
+          if (state.isConnectionActive) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('La conección esta inactiva')));
+          }
+
+          (await starwarsRepository.reportSighting(
+                  sWSightingReport: SWSightingReport(
+                      userId: state.selectedSWCharacterIfAny!.id,
+                      characterName: state.selectedSWCharacterIfAny!.name,
+                      dateTime: DateTime.now().toString())))
+              .fold(
+                  (error) => ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('¡Error!'),
+                          backgroundColor: Colors.red)),
+                  (success) => ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('¡Reporte enviado!'),
+                          backgroundColor: Colors.green)));
+        }
+
         if (state.swpeopleStatus == SWPeopleStatus.details) {
           return WillPopScope(
               onWillPop: () async {
@@ -21,9 +45,47 @@ class SWPeopleDetailsPage extends StatelessWidget {
                     .add(ExitSWPeopleDetailsEvent());
                 return true;
               },
-              child: Text(state.selectedSWCharacterIfAny!.name));
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        ListTile(
+                            leading: const Icon(Icons.label),
+                            title: Text(state.selectedSWCharacterIfAny!.name),
+                            subtitle: const Text('name')),
+                        ListTile(
+                            leading: const Icon(Icons.label),
+                            title: Text(state.selectedSWCharacterIfAny!.gender),
+                            subtitle: const Text('gender')),
+                        ListTile(
+                            leading: const Icon(Icons.label),
+                            title: Text((state
+                                        .selectedSWCharacterIfAny!.birthYear ==
+                                    null)
+                                ? '?'
+                                : state.selectedSWCharacterIfAny!.birthYear!),
+                            subtitle: const Text('birth year')),
+                        // ListTile(
+                        //     leading: const Icon(Icons.label),
+                        //     title: Text(state.selectedSWCharacterIfAny!.height!
+                        //         .toString()),
+                        //     subtitle: const Text('birth year'))
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Center(
+                      child: ElevatedButton(
+                          onPressed: () => _onReportSighting,
+                          child: const Text('¡Reportar avistamiento!')),
+                    ),
+                  )
+                ],
+              ));
         } else {
-          return const Text('error');
+          return const Text('??');
         }
       }),
     );

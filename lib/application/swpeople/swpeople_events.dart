@@ -19,8 +19,12 @@ class ExitSWPeopleDetailsEvent extends SWPeopleEvent {
   ExitSWPeopleDetailsEvent();
 }
 
-class ShowSWPeopleMenuEvent extends SWPeopleEvent {
-  ShowSWPeopleMenuEvent();
+class EnterSWPeopleMenuEvent extends SWPeopleEvent {
+  EnterSWPeopleMenuEvent();
+}
+
+class ExitSWPeopleMenuEvent extends SWPeopleEvent {
+  ExitSWPeopleMenuEvent();
 }
 
 class SendReportEvent extends SWPeopleEvent {

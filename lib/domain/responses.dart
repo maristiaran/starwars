@@ -16,3 +16,9 @@ class SWPeopleError implements Exception {
     }
   }
 }
+
+class Success {
+  final String message;
+
+  Success({required this.message});
+}

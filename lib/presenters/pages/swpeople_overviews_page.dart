@@ -26,6 +26,8 @@ class SWPeopleOverviewsPage extends StatelessWidget {
             } else if (state.swpeopleStatus == SWPeopleStatus.error) {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(state.errorMessageIfAny!)));
+            } else if (state.swpeopleStatus == SWPeopleStatus.menu) {
+              appRouter.goNamed('menu');
             }
           },
           builder: (context, state) {
@@ -80,6 +82,12 @@ class SWPeopleOverviewsPage extends StatelessWidget {
             }
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.menu_book),
+        onPressed: () {
+          BlocProvider.of<SWPeopleBloc>(context).add(EnterSWPeopleMenuEvent());
+        },
       ),
     );
   }
