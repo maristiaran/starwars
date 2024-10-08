@@ -1,6 +1,6 @@
-import 'package:desafio_urbetrack/presenters/pages/menu_page.dart';
-import 'package:desafio_urbetrack/presenters/pages/swpeople_details_page.dart';
-import 'package:desafio_urbetrack/presenters/pages/swpeople_overviews_page.dart';
+import 'package:desafio_startwars/presenters/pages/menu_page.dart';
+import 'package:desafio_startwars/presenters/pages/swpeople_details_page.dart';
+import 'package:desafio_startwars/presenters/pages/swpeople_overviews_page.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(

@@ -1,7 +1,7 @@
-import 'package:desafio_urbetrack/application/swpeople/swpeople.dart';
-// import 'package:desafio_urbetrack/application/swpeople_app.dart';
-import 'package:desafio_urbetrack/presenters/routes.dart';
-import 'package:desafio_urbetrack/repositories/starwars_repository_rest_adapter.dart';
+import 'package:desafio_startwars/application/swpeople/swpeople.dart';
+import 'package:desafio_startwars/domain/startwars_repository.dart';
+import 'package:desafio_startwars/presenters/routes.dart';
+import 'package:desafio_startwars/repositories/starwars_repository_rest_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +17,8 @@ class SWPeopleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SWPeopleBloc>(
-        create: (context) => SWPeopleBloc(StarwarsRepositoryRestAdapter()),
+        create: (context) => SWPeopleBloc(
+            StarwarsRepositoryRestAdapter() as StarwarsRepositoryPort),
         child: (MaterialApp.router(
             title: 'Flutter Authentication',
             routeInformationParser: appRouter.routeInformationParser,
@@ -36,12 +37,12 @@ class SWPeopleWidget extends StatelessWidget {
                 ),
               ),
               textTheme: TextTheme(
-                headline1: TextStyle(
+                displayMedium: TextStyle(
                   fontSize: 46.0,
                   color: Colors.blue.shade700,
                   fontWeight: FontWeight.w500,
                 ),
-                bodyText1: const TextStyle(fontSize: 18.0),
+                displaySmall: const TextStyle(fontSize: 18.0),
               ),
             ))));
   }

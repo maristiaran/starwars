@@ -1,4 +1,4 @@
-import 'package:desafio_urbetrack/domain/starwars_character.dart';
+import 'package:desafio_startwars/domain/starwars_character.dart';
 import 'package:equatable/equatable.dart';
 
 enum SWPeopleStatus { loading, loaded, error, details, menu }

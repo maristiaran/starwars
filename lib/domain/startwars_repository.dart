@@ -1,6 +1,6 @@
-import 'package:desafio_urbetrack/domain/responses.dart';
-import 'package:desafio_urbetrack/domain/sighting_report.dart';
-import 'package:desafio_urbetrack/domain/starwars_character.dart';
+import 'package:desafio_startwars/domain/responses.dart';
+import 'package:desafio_startwars/domain/sighting_report.dart';
+import 'package:desafio_startwars/domain/starwars_character.dart';
 import 'package:either_dart/either.dart';
 
 abstract class StarwarsRepositoryPort {

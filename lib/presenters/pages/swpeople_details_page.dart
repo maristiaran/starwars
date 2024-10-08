@@ -1,8 +1,8 @@
-import 'package:desafio_urbetrack/application/swpeople/swpeople.dart';
-import 'package:desafio_urbetrack/application/swpeople/swpeople_events.dart';
-import 'package:desafio_urbetrack/application/swpeople/swpeople_state.dart';
-import 'package:desafio_urbetrack/bindings_and_tools.dart';
-import 'package:desafio_urbetrack/domain/sighting_report.dart';
+import 'package:desafio_startwars/application/swpeople/swpeople.dart';
+import 'package:desafio_startwars/application/swpeople/swpeople_events.dart';
+import 'package:desafio_startwars/application/swpeople/swpeople_state.dart';
+import 'package:desafio_startwars/bindings_and_tools.dart';
+import 'package:desafio_startwars/domain/sighting_report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +16,7 @@ class SWPeopleDetailsPage extends StatelessWidget {
         title: const Text('Detalle'),
       ),
       body: BlocBuilder<SWPeopleBloc, SWPeopleState>(builder: (context, state) {
-        _onReportSighting() async {
+        onReportSighting() async {
           if (state.isConnectionActive) {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('La conección esta inactiva')));
@@ -78,7 +78,7 @@ class SWPeopleDetailsPage extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: Center(
                       child: ElevatedButton(
-                          onPressed: () => _onReportSighting,
+                          onPressed: () => onReportSighting,
                           child: const Text('¡Reportar avistamiento!')),
                     ),
                   )

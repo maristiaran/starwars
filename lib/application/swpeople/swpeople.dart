@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:desafio_urbetrack/application/swpeople/swpeople_events.dart';
-import 'package:desafio_urbetrack/application/swpeople/swpeople_state.dart';
-import 'package:desafio_urbetrack/domain/domain_utils.dart';
-import 'package:desafio_urbetrack/domain/startwars_repository.dart';
-import 'package:desafio_urbetrack/domain/starwars_character.dart';
+import 'package:desafio_startwars/application/swpeople/swpeople_events.dart';
+import 'package:desafio_startwars/application/swpeople/swpeople_state.dart';
+import 'package:desafio_startwars/domain/domain_utils.dart';
+import 'package:desafio_startwars/domain/startwars_repository.dart';
+import 'package:desafio_startwars/domain/starwars_character.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SWPeopleBloc extends Bloc<SWPeopleEvent, SWPeopleState> {
